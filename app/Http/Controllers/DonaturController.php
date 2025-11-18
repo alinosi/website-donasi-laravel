@@ -65,12 +65,20 @@ class DonaturController extends Controller
             'nama'         => $request->nama,
             'pesan'        => $request->pesan,
             'total_donasi' => $total_donasi,
-            'tipe_bayar'   => $request->tipe_bayar
+            'tipe_bayar'   => $request->tipe_bayar,
         ]);
 
         return redirect('/donatur')->with(['success' => 'Data Berhasil Disimpan!']);
     }
     // ---- AKHIR SIMPAN DATA ----
+
+    // UPDATE : DETAIL DATA
+    public function show(string $id): View
+    {
+        $donatur = Donatur::findOrFail($id);
+
+        return view('donaturs.show', compact('donatur'));
+    }
 
     // ==== AWAL EDIT DATA ====
     public function edit(string $id): View
