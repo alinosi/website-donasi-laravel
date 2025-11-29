@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DonaturController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\cekAdmin;
 use App\Http\Middleware\cekLogin;
@@ -20,6 +21,7 @@ Route::middleware([cekLogin::class])->group(function () {
 Route::resource('donaturs', DonaturController::class);
 Route::middleware([cekAdmin::class])->group(function () {
     Route::get('/dashboard', [DonaturController::class, 'index']);
+    Route::get('/panel', [AdminController::class, 'index']);
 });
 
 // SESI LOGIN
