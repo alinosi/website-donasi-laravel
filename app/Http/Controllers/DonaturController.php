@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Donatur;
+use App\Models\Program;
+use App\Models\Transaction;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -35,12 +38,17 @@ class DonaturController extends Controller
 
     public function donasi(): View
     {
-        $donaturs = Donatur::latest()->get();
+        // $donaturs = Donatur::latest()->get();
 
-        $totalTerkumpul = $donaturs->sum('total_donasi');
-        $totalOrang = $donaturs->count();
+        // $totalTerkumpul = $donaturs->sum('total_donasi');
+        // $totalOrang = $donaturs->count();
 
-        return view('donasi', compact('totalTerkumpul', 'totalOrang'));
+        $donationsdata = Program::all();
+        $donationsRecapt = Transaction::select('program_id', DB::raw('count(*) as total_user'))
+                 ->groupBy('program_id')
+                 ->get();
+
+        return view('donasi', compact('donationsdata', 'donationsRecapt'));
     }
 
     // ==== AWAL SIMPAN DATA ====
