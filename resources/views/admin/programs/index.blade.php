@@ -7,7 +7,7 @@
     <div class="bg-white rounded-lg shadow-sm overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
             <h3 class="font-bold text-gray-700">Semua Program</h3>
-            <a href="#" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition flex items-center">
+            <a href="{{ route('admin.programs.create') }}" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition flex items-center">
                 <i data-feather="plus" class="w-4 h-4 mr-2"></i> Buat Program
             </a>
         </div>
@@ -39,7 +39,16 @@
                         <td class="px-6 py-3 text-right space-x-2">
                             <a href="#" class="text-gray-500 hover:text-gray-700" title="Lihat"><i data-feather="eye" class="w-4 h-4 inline"></i></a>
                             <a href="#" class="text-blue-500 hover:text-blue-700" title="Edit"><i data-feather="edit" class="w-4 h-4 inline"></i></a>
-                            <button class="text-red-500 hover:text-red-700" title="Hapus"><i data-feather="trash-2" class="w-4 h-4 inline"></i></button>
+                            <form action="{{ route('admin.programs.deactivate', $program->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" 
+                                    class="text-red-500 hover:text-red-700" 
+                                    onclick="return confirm('Apakah Anda yakin ingin menonaktifkan program ini? Data tidak akan dihapus permanen.')" 
+                                    title="deactive">
+                                    <i data-feather="trash-2" class="w-4 h-4 inline"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     @empty

@@ -46,7 +46,7 @@
 
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             @if (Auth::user()->jenisAkun === 'admin')
-                                <a class="dropdown-item" href="/dashboard">Dashboard</a>
+                                <a class="dropdown-item" href="/admin/dashboard">Dashboard</a>
                             @endif
                             <a class="dropdown-item" href="/session/logout">Logout</a>
                         </div>

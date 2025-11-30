@@ -40,7 +40,7 @@
                         <div class="col-sm text-right">
                             {{-- LINK DINAMIS --}}
                             {{-- Mengirim ID donasi agar halaman pembayaran tahu donasi mana yang dibayar --}}
-                            <a href="/pembayaran/{{ $donationdata->id }}">
+                            <a href="{{ route('pembayaran', $donationdata->id) }}">
                                 <button class="pushable">
                                     <span class="shadow"></span>
                                     <span class="edge"></span>

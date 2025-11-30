@@ -4,11 +4,12 @@
 
 @section('content')
     <div class="d-flex justify-content-center">
-        <form class="form" action="{{ route('donaturs.store') }}" method="POST">
+        <form class="form" action="{{ route('transaction.store') }}" method="POST">
             @csrf
             <div class="card" id="card1">
                 <span class="title">Informasi Donatur</span>
                 <div class="group">
+                    <input type="hidden" name="program_id" value="{{ $program->id }}">
                     <input placeholder="" type="text" id="name" name="nama" value="{{ old('nama') }}" />
 
                     <label for="name">Nama</label>
@@ -37,7 +38,7 @@
 
                     <div class="col-sm">
                         <div class="group">
-                            <input placeholder="Rp. " type="text" id="dengan-rupiah" name="total_donasi"
+                            <input placeholder="Rp. " type="text" id="dengan-rupiah" name="amount"
                                 value="{{ old('total_donasi') }}" required />
                             @if ($errors->has('total_donasi'))
                                 <div class="error">{{ $errors->first('total_donasi') }}</div>
@@ -50,7 +51,7 @@
                 <div class="row">
                     <div class="col-sm">
                         <label>
-                            <input class="radio-input" type="radio" name="tipe_bayar" value="Gopay" required />
+                            <input class="radio-input" type="radio" name="pay_type" value="Gopay" required />
                             <span class="radio-tile">
                                 <span class="radio-icon">
                                     <img src="/images/pembayaran/opsi1-gopay.png" alt="Gopay" />
@@ -60,7 +61,7 @@
                     </div>
                     <div class="col-sm">
                         <label>
-                            <input class="radio-input" type="radio" name="tipe_bayar" value="Dana" required />
+                            <input class="radio-input" type="radio" name="pay_type" value="Dana" required />
                             <span class="radio-tile">
                                 <span class="radio-icon">
                                     <img src="/images/pembayaran/opsi2-dana.png" alt="Dana" />
@@ -70,7 +71,7 @@
                     </div>
                     <div class="col-sm">
                         <label>
-                            <input class="radio-input" type="radio" name="tipe_bayar" value="BCA Virtual Account"
+                            <input class="radio-input" type="radio" name="pay_type" value="BCA Virtual Account"
                                 required />
                             <span class="radio-tile">
                                 <span class="radio-icon">

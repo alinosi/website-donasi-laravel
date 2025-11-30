@@ -14,14 +14,16 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/donasi', [DonaturController::class, 'donasi']);
+Route::get('/donasi', [DonaturController::class, 'donasi'])->name('donasi');
 Route::get('/donatur', [DonaturController::class, 'tampildonatur']);
 
 Route::middleware([cekLogin::class])->group(function () {
-    Route::get('/pembayaran', [DonaturController::class, 'create']);
+    Route::get('/pembayaran/{id}', [DonaturController::class, 'create'])->name('pembayaran');
+    Route::post('/pembayaran/store', [TransactionController::class, 'store'])->name('transaction.store');
 });
 
 Route::resource('donaturs', DonaturController::class);
+
 Route::middleware([cekAdmin::class])->group(function () {
     Route::get('/dashboard', [DonaturController::class, 'index']);
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
@@ -30,7 +32,12 @@ Route::middleware([cekAdmin::class])->group(function () {
     Route::resource('users', UserController::class)->name('index', 'admin.users.index');
 
     // URL: /admin/programs
-    Route::resource('programs', ProgramController::class)->name('index', 'admin.programs.index');
+    // Route::get('/programs', ProgramController::class)->name('index', 'admin.programs.index');
+    Route::get('/programs', [ProgramController::class, 'index'])->name('admin.programs.index');
+    Route::get('/programs/create', [ProgramController::class, 'create'])->name('admin.programs.create');
+    Route::post('/programs/create', [ProgramController::class, 'store'])->name('admin.programs.store');
+    Route::patch('/programs/{id}', [ProgramController::class, 'deactivate'])->name('admin.programs.deactivate');
+
 
     // URL: /admin/transactions
     Route::resource('transactions', TransactionController::class)->name('index', 'admin.transactions.index');

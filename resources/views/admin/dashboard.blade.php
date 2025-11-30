@@ -32,7 +32,7 @@
         <div class="bg-white rounded-lg shadow-sm p-6 border-l-4 border-yellow-500">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-500 font-bold uppercase">Total Donasi (Bulan Ini)</p>
+                    <p class="text-sm text-gray-500 font-bold uppercase">Dana Terkumpul (Bulan Ini)</p>
                     <p class="text-2xl font-bold text-gray-800">Rp {{ number_format($monthlyIncome ?? 0, 0, ',', '.') }}</p>
                 </div>
                 <div class="p-3 bg-yellow-100 text-yellow-600 rounded-full">
@@ -60,8 +60,8 @@
                 <tbody>
                     @forelse($latestTransactions as $trx)
                     <tr class="border-b hover:bg-gray-50">
-                        <td class="px-6 py-3 font-medium">{{ $trx->user->name }}</td>
-                        <td class="px-6 py-3">{{ $trx->program->title }}</td>
+                        <td class="px-6 py-3 font-medium">{{ $trx->user->username }}</td>
+                        <td class="px-6 py-3">{{ $trx->program->program_name }}</td>
                         <td class="px-6 py-3">Rp {{ number_format($trx->amount, 0, ',', '.') }}</td>
                         <td class="px-6 py-3">
                             <span class="px-2 py-1 rounded-full text-xs 

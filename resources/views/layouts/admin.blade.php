@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Admin Dashboard')</title>
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
     <style>
@@ -56,6 +57,19 @@
                     <i data-feather="dollar-sign" class="w-5 h-5 mr-3"></i>
                     Transactions
                 </a>
+
+                
+                <div class="pt-4 pb-2">
+                    <p class="px-4 text-xs font-semibold text-slate-500 uppercase">Beranda</p>
+                </div>
+
+                <a href="{{ route('donasi') }}" 
+                {{-- <a href="{{ route('admin.dashboard') }}"  --}}
+                   class="flex items-center px-4 py-3 rounded-md transition-colors {{ request()->routeIs('admin.transactions.*') ? 'bg-blue-600 text-white' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                    <i data-feather="dollar-sign" class="w-5 h-5 mr-3"></i>
+                    Kembali ke beranda
+                </a>
+
             </nav>
         </aside>
 

@@ -29,10 +29,11 @@ class DonaturController extends Controller
     }
 
     // ==== AWAL TAMBAH DATA ====
-    public function create(): View
+    public function create($id): View
     {
-        $donaturs = Donatur::latest()->get();
-        return view('donaturs.create');
+        $program = Program::findOrFail($id);
+
+        return view('donaturs.create', compact('program'));
     }
     // ---- AKHIR TAMBAH DATA ----
 
@@ -51,33 +52,6 @@ class DonaturController extends Controller
         return view('donasi', compact('donationsdata', 'donationsRecapt'));
     }
 
-    // ==== AWAL SIMPAN DATA ====
-    public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'nama'         => 'required|string|min:1',
-            'pesan'        => 'required|string|min:1',
-            'total_donasi' => 'required|string|min:1', // Ubah sementara
-            'tipe_bayar'   => 'required|string|min:1',
-        ]);
-
-        // Buang titik
-        $total_donasi = str_replace(['Rp. ', '.', ','], '', $request->total_donasi);
-
-        if (!is_numeric($total_donasi) || $total_donasi < 1) {
-            return redirect()->back()->withErrors(['total_donasi' => 'Total donasi harus berupa angka dan minimal 1'])->withInput();
-        }
-
-        // Save
-        Donatur::create([
-            'nama'         => $request->nama,
-            'pesan'        => $request->pesan,
-            'total_donasi' => $total_donasi,
-            'tipe_bayar'   => $request->tipe_bayar,
-        ]);
-
-        return redirect('/donatur')->with(['success' => 'Data Berhasil Disimpan!']);
-    }
     // ---- AKHIR SIMPAN DATA ----
 
     // UPDATE : DETAIL DATA
