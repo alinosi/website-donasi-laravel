@@ -24,7 +24,12 @@ class DonaturController extends Controller
     public function tampilDonatur(): View
     {
         // $donaturs = Donatur::latest()->paginate(10);
-        $donaturs = Donatur::latest()->get();
+            $donaturs = Transaction::with([
+                'user:id,username',
+                'program:id,program_name'
+            ])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
         return view('donaturs.donaturPublic', compact('donaturs'));
     }
 
@@ -44,7 +49,7 @@ class DonaturController extends Controller
         // $totalTerkumpul = $donaturs->sum('total_donasi');
         // $totalOrang = $donaturs->count();
 
-        $donationsdata = Program::all();
+        $donationsdata = Program::where('is_active', 1)->get();
         $donationsRecapt = Transaction::select('program_id', DB::raw('count(*) as total_user'))
                  ->groupBy('program_id')
                  ->get();

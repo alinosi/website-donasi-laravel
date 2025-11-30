@@ -19,14 +19,13 @@
                     <div class="header">
                         <img src="https://i.ibb.co.com/nQQmMw8/ikonrupiah.png" class="image" />
                         <div>
-                            <p class="name">{{ $donatur->nama }}</p>
+                            <p class="name">{{ $donatur->user->username }}</p>
                             <p class="amount">
                                 <span class="donation-amount">Rp
-                                    {{ number_format($donatur->total_donasi, 0, ',', '.') }}</span>
+                                    {{ number_format($donatur->amount, 0, ',', '.') }}</span>
                                 <span class="via-method"><i class="fa-solid fa-circle"></i> Via
-                                    {{ $donatur->tipe_bayar }}</span>
+                                    {{ $donatur->pay_type }}</span>
                             </p>
-                            <p class="message">{{ $donatur->pesan }}</p>
                         </div>
                     </div>
                 </div>

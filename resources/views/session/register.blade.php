@@ -19,7 +19,7 @@
     <style>
         .form {
             position: relative;
-            margin-top: 15px;
+            margin-top: 45px;
             display: flex;
             flex-direction: column;
             border-radius: 0.75rem;

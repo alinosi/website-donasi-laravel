@@ -17,9 +17,10 @@
 
     <div class="flex h-screen overflow-hidden">
         
+        {{-- SIDEBAR --}}
         <aside class="w-64 bg-slate-900 text-white flex-col hidden md:flex transition-all duration-300">
             <div class="h-16 flex items-center justify-center border-b border-slate-700">
-                <h1 class="text-xl font-bold">My<span class="text-blue-500">App</span></h1>
+                <h1 class="text-xl font-bold">Peduli<span class="text-blue-500">Asa</span></h1>
             </div>
 
             <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
@@ -34,14 +35,12 @@
                 </div>
 
                 <a href="{{ route('admin.users.index') }}"
-                {{-- <a href="{{ route('admin.dashboard') }}"  --}}
                    class="flex items-center px-4 py-3 rounded-md transition-colors {{ request()->routeIs('admin.users.*') ? 'bg-blue-600 text-white' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
                     <i data-feather="users" class="w-5 h-5 mr-3"></i>
                     Users
                 </a>
 
                 <a href="{{ route('admin.programs.index') }}" 
-                {{-- <a href="{{ route('admin.dashboard') }}"  --}}
                    class="flex items-center px-4 py-3 rounded-md transition-colors {{ request()->routeIs('admin.programs.*') ? 'bg-blue-600 text-white' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
                     <i data-feather="layers" class="w-5 h-5 mr-3"></i>
                     Programs
@@ -52,46 +51,80 @@
                 </div>
 
                 <a href="{{ route('admin.transactions.index') }}" 
-                {{-- <a href="{{ route('admin.dashboard') }}"  --}}
                    class="flex items-center px-4 py-3 rounded-md transition-colors {{ request()->routeIs('admin.transactions.*') ? 'bg-blue-600 text-white' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
                     <i data-feather="dollar-sign" class="w-5 h-5 mr-3"></i>
-                    Transactions
+                    Transaksi
                 </a>
-
-                
-                <div class="pt-4 pb-2">
-                    <p class="px-4 text-xs font-semibold text-slate-500 uppercase">Beranda</p>
-                </div>
-
-                <a href="{{ route('donasi') }}" 
-                {{-- <a href="{{ route('admin.dashboard') }}"  --}}
-                   class="flex items-center px-4 py-3 rounded-md transition-colors {{ request()->routeIs('admin.transactions.*') ? 'bg-blue-600 text-white' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
-                    <i data-feather="dollar-sign" class="w-5 h-5 mr-3"></i>
-                    Kembali ke beranda
-                </a>
-
             </nav>
         </aside>
 
+        {{-- MAIN CONTENT WRAPPER --}}
         <div class="flex-1 flex flex-col overflow-hidden">
-            <header class="h-16 bg-white shadow-sm flex items-center justify-between px-6 z-10">
+            
+            {{-- HEADER / NAVBAR --}}
+            <header class="h-16 bg-white shadow-sm flex items-center justify-between px-6 z-20 relative">
                 <h2 class="text-lg font-semibold text-gray-700">@yield('header_title', 'Overview')</h2>
-                <div class="flex items-center space-x-3">
-                    <span class="text-sm font-medium text-gray-600">{{ Auth::user()->name ?? 'Admin' }}</span>
-                    <div class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
-                        {{ substr(Auth::user()->name ?? 'A', 0, 1) }}
+                
+                <div class="relative">
+                    <button id="profileButton" class="flex items-center space-x-3 focus:outline-none hover:bg-gray-50 p-2 rounded-lg transition">
+                        <div class="text-right hidden md:block">
+                            <p class="text-sm font-medium text-gray-700 leading-none">{{ Auth::user()->name ?? 'Admin' }}</p>
+                            <p class="text-xs text-gray-500 mt-1">Administrator</p>
+                        </div>
+                        <div class="h-9 w-9 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold shadow-sm">
+                            {{ substr(Auth::user()->name ?? 'A', 0, 1) }}
+                        </div>
+                        <i data-feather="chevron-down" class="w-4 h-4 text-gray-400"></i>
+                    </button>
+
+                    <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] border border-gray-100 py-2 z-50">
+                        <div class="px-4 py-2 border-b border-gray-100 md:hidden">
+                            <p class="text-sm font-semibold text-gray-800">{{ Auth::user()->name ?? 'Admin' }}</p>
+                            <p class="text-xs text-gray-500">Administrator</p>
+                        </div>
+
+                        <a href="{{ url('/') }}" class="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
+                            <i data-feather="globe" class="w-4 h-4 mr-3"></i>
+                            Halaman Utama Web
+                        </a>
+                        
+                        <div class="border-t border-gray-100 my-1"></div>
+                            <a href="{{ route('logout') }}"><button type="submit" class="w-full flex items-center px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors text-left">
+                                <i data-feather="log-out" class="w-4 h-4 mr-3"></i>
+                                Logout
+                            </button></a>
                     </div>
                 </div>
-            </header>
+                </header>
 
+            {{-- CONTENT BODY --}}
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-6">
                 @yield('content')
             </main>
         </div>
     </div>
 
+    {{-- SCRIPTS --}}
     <script>
+        // Inisialisasi Feather Icons
         feather.replace();
+
+        // LOGIC DROPDOWN
+        const profileBtn = document.getElementById('profileButton');
+        const dropdownMenu = document.getElementById('profileDropdown');
+
+        // Toggle saat tombol diklik
+        profileBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Mencegah event bubbling ke window
+            dropdownMenu.classList.toggle('hidden');
+        });
+
+        // Tutup dropdown jika klik di luar area
+        window.addEventListener('click', (e) => {
+            if (!profileBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                dropdownMenu.classList.add('hidden');
+            }
+        });
     </script>
 </body>
 </html>

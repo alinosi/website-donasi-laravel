@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@yield('title', 'Ghazian')</title>
-    <link rel="icon" href="/images/layout/ikon-logo.png">
+    <link rel="icon" href="/images/layout/icon-light.svg">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -19,7 +19,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
-        <a class="navbar-brand" href="/"><img src="/images/layout/main-logo.png" width="320" /></a>
+        <a class="navbar-brand" href="/"><img src="/images/layout/logo_test.svg"/></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -124,6 +124,7 @@
 
     .navbar-brand img {
         width: 250px;
+        /* height: 40px; */
         margin-left: 20px;
         margin-top: 3px;
         margin-bottom: 3px;

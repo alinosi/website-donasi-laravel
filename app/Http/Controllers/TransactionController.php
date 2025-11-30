@@ -5,11 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Transaction;
+use App\Models\Program;
 
 class TransactionController extends Controller
 {
     public function index() {
-        $transactions = Transaction::paginate(10);
+        // $transactions = Transaction::paginate(10);
+        $transactions = Transaction::with([
+                'user:id,username',
+                'program:id,program_name'
+            ])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
         return view('admin.transactions.index', compact('transactions'));
     }
 
@@ -34,6 +42,9 @@ class TransactionController extends Controller
             'status'     => 'success',
             'amount'     => $amount,
         ]);
+
+        Program::where('id', $request->program_id)
+            ->increment('funds_collected', $amount);
 
         return redirect()->route('donaturs.index')->with(['success' => 'Data Berhasil Dibuat!']);
     }

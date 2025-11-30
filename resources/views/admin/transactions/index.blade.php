@@ -32,8 +32,8 @@
                     @forelse($transactions as $trx)
                     <tr class="hover:bg-gray-50 transition">
                         <td class="px-6 py-3 text-xs font-mono text-gray-500">#{{ $trx->id }}</td>
-                        <td class="px-6 py-3 font-medium">{{ $trx->user->name }}</td>
-                        <td class="px-6 py-3 text-xs">{{ $trx->program->title }}</td>
+                        <td class="px-6 py-3 font-medium">{{ $trx->user->username }}</td>
+                        <td class="px-6 py-3 text-xs">{{ $trx->program->program_name }}</td>
                         <td class="px-6 py-3 font-bold text-gray-700">Rp {{ number_format($trx->amount, 0, ',', '.') }}</td>
                         <td class="px-6 py-3">{{ $trx->created_at->format('d/m/Y H:i') }}</td>
                         <td class="px-6 py-3">

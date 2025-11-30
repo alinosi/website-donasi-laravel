@@ -1,5 +1,5 @@
 @extends('layouts.header')
-@section('title', 'UNP Berbagi')
+@section('title', 'Sambung Asa')
 {{-- TAMPILAN HOME --}}
 
 @section('content')

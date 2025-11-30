@@ -3,11 +3,13 @@
 {{-- TAMBAH DONASI --}}
 
 @section('content')
+<br>
+<br>
     <div class="d-flex justify-content-center">
         <form class="form" action="{{ route('transaction.store') }}" method="POST">
             @csrf
             <div class="card" id="card1">
-                <span class="title">Informasi Donatur</span>
+                <span class="title">Berikan Donasi</span>
                 <div class="group">
                     <input type="hidden" name="program_id" value="{{ $program->id }}">
                     <input placeholder="" type="text" id="name" name="nama" value="{{ old('nama') }}" />

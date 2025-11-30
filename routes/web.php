@@ -15,14 +15,13 @@ Route::get('/', function () {
 });
 
 Route::get('/donasi', [DonaturController::class, 'donasi'])->name('donasi');
-Route::get('/donatur', [DonaturController::class, 'tampildonatur']);
+Route::get('/donatur', [DonaturController::class, 'tampildonatur'])->name('donaturs.index');
 
 Route::middleware([cekLogin::class])->group(function () {
     Route::get('/pembayaran/{id}', [DonaturController::class, 'create'])->name('pembayaran');
     Route::post('/pembayaran/store', [TransactionController::class, 'store'])->name('transaction.store');
 });
 
-Route::resource('donaturs', DonaturController::class);
 
 Route::middleware([cekAdmin::class])->group(function () {
     Route::get('/dashboard', [DonaturController::class, 'index']);
@@ -50,4 +49,4 @@ Route::post('/session/login', [SessionController::class, 'login']);
 Route::get('/session/register', [SessionController::class, 'register']);
 Route::post('/session/create', [SessionController::class, 'create']);
 
-Route::get('/session/logout', [SessionController::class, 'logout']);
+Route::get('/session/logout', [SessionController::class, 'logout'])->name('logout');

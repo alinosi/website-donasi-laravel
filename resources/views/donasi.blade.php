@@ -2,6 +2,8 @@
 @section('title', 'mulai donasi') {{-- Judul Tab Browser Dinamis --}}
 
 @section('content')
+<br>
+<br>
 @php
     $index = 0;
 @endphp
@@ -10,7 +12,10 @@
             <div class="card mb-3 mt-4" id="animated-card">
                 {{-- GAMBAR DINAMIS --}}
                 {{-- Pastikan path gambar sesuai dengan penyimpanan kamu (misal: di folder public atau storage) --}}
-                <img class="card-img-top" src="{{ asset('images/index/' . $donationdata->image) }}" alt="{{ $donationdata->program_name }}" />
+                <img class="card-img-top" 
+                    src="{{ asset('storage/program_images/' . $donationdata->image) }}" 
+                    alt="{{ $donationdata->program_name }}"
+                    style="height: 200px; object-fit: cover;" />
                 <div class="card-body">
                     {{-- JUDUL DINAMIS --}}
                     <h5 class="card-title">{{ $donationdata->program_name }}</h5>
