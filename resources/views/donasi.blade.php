@@ -1,5 +1,5 @@
 @extends('layouts.header')
-@section('title', 'mulai donasi') {{-- Judul Tab Browser Dinamis --}}
+@section('title', 'mulai donasi')
 
 @section('content')
 <br>
@@ -10,41 +10,29 @@
         @foreach ( $donationsdata as $donationdata )
         <div class="container">
             <div class="card mb-3 mt-4" id="animated-card">
-                {{-- GAMBAR DINAMIS --}}
-                {{-- Pastikan path gambar sesuai dengan penyimpanan kamu (misal: di folder public atau storage) --}}
                 <img class="card-img-top" 
                     src="{{ asset('storage/program_images/' . $donationdata->image) }}" 
                     alt="{{ $donationdata->program_name }}"
                     style="height: 200px; object-fit: cover;" />
                 <div class="card-body">
-                    {{-- JUDUL DINAMIS --}}
                     <h5 class="card-title">{{ $donationdata->program_name }}</h5>
-
-                    {{-- TOTAL DONATUR (Sudah Dinamis dari kode lama Anda) --}}
                     <p class="card-text" id="total-donatur">
                         <i class="fa-regular fa-circle-check"></i> 
                         {{ isset($donationsRecapt[$index]) ? $donationsRecapt[$index]->total_user : 0 }} Orang Telah Berdonasi
                     </p>
 
                     <div class="row">
-                        {{-- SECTION KIRI --}}
                         <div class="col-sm">
-                            {{-- TOTAL TERKUMPUL (Sudah Dinamis dari kode lama Anda) --}}
                             <p class="card-text" id="total-kumpul">
                                 Rp {{ number_format($donationdata->funds_collected, 0, ',', '.') }}
                             </p>
-
-                            {{-- TARGET DONASI DINAMIS --}}
                             <p class="card-text" id="total-jumlah">
                                 Terkumpul dari 
                                 <strong>Rp {{ number_format($donationdata->target_funds, 0, ',', '.') }}</strong>
                             </p>
                         </div>
 
-                        {{-- SECTION KANAN --}}
                         <div class="col-sm text-right">
-                            {{-- LINK DINAMIS --}}
-                            {{-- Mengirim ID donasi agar halaman pembayaran tahu donasi mana yang dibayar --}}
                             <a href="{{ route('pembayaran', $donationdata->id) }}">
                                 <button class="pushable">
                                     <span class="shadow"></span>
@@ -56,13 +44,9 @@
                     </div>
 
                     <div class="progress">
-                        {{-- LOGIKA PERSENTASE DINAMIS --}}
                         @php
-                            // Mencegah error division by zero jika target 0
                             $target = $donationdata->target_funds > 0 ? $donationdata->target_funds : 1;
                             $persentase = ($donationdata->funds_collected / $target) * 100;
-
-                            // Membatasi agar bar tidak lebih dari 100% secara visual
                             $width = $persentase > 100 ? 100 : $persentase;
                         @endphp
 
@@ -80,7 +64,6 @@
     
 
     <style>
-        /* CSS TETAP SAMA SEPERTI SEBELUMNYA */
         #animated-card {
             animation: scrollUp 1s ease-in-out forwards;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.096), 0 6px 30px rgba(0, 0, 0, 0.096);
