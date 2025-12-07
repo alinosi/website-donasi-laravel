@@ -1,6 +1,5 @@
 @extends('layouts.header')
 @section('title', 'Pembayaran')
-{{-- TAMBAH DONASI --}}
 
 @section('content')
 <br>
@@ -12,18 +11,12 @@
                 <span class="title">Berikan Donasi</span>
                 <div class="group">
                     <input type="hidden" name="program_id" value="{{ $program->id }}">
-                    <input placeholder="" type="text" id="name" name="nama" value="{{ old('nama') }}" />
+                    <input placeholder="" type="text" id="name" name="nama" disabled 
+                        value="{{ old('nama', Auth::check() ? Auth::user()->username : '') }}" />
 
                     <label for="name">Nama</label>
                     @if ($errors->has('nama'))
                         <div class="error">{{ $errors->first('nama') }}</div>
-                    @endif
-                </div>
-                <div class="group">
-                    <textarea placeholder="" id="comment" name="pesan" rows="5" required spellcheck="false">{{ old('pesan') }}</textarea>
-                    <label for="comment">Pesan Donasi</label>
-                    @if ($errors->has('pesan'))
-                        <div class="error">{{ $errors->first('pesan') }}</div>
                     @endif
                 </div>
                 <div class="form-check">
@@ -113,23 +106,22 @@
 
         var anonimCheckbox = document.getElementById('anonim');
         var nameInput = document.getElementById('name');
+        var originalName = "{{ Auth::check() ? Auth::user()->username : '' }}";
 
         anonimCheckbox.addEventListener('change', function() {
             if (anonimCheckbox.checked) {
                 nameInput.value = 'Anonim';
-                nameInput.disabled = true;
+                nameInput.readOnly = true; 
+                nameInput.style.backgroundColor = "#e9ecef"; 
             } else {
-                nameInput.value = '';
-                nameInput.disabled = false;
+                nameInput.value = originalName;
+                nameInput.readOnly = false;
+                nameInput.style.backgroundColor = "transparent";
             }
         });
 
         document.querySelector('form').addEventListener('submit', function(event) {
-            var anonimCheckbox = document.getElementById('anonim');
-            var nameInput = document.getElementById('name');
-
             if (anonimCheckbox.checked) {
-                nameInput.disabled = false;
                 nameInput.value = 'Anonim';
             }
         });
@@ -190,19 +182,8 @@
             background-color: transparent;
         }
 
-        .form .group input:placeholder-shown+label,
-        .form .group textarea:placeholder-shown+label {
-            top: 10px;
-            background-color: transparent;
-        }
-
-        .form .group input:focus,
-        .form .group textarea:focus {
-            border-color: #3366cc;
-        }
-
-        .form .group input:focus+label,
-        .form .group textarea:focus+label {
+        .form .group input:not(:placeholder-shown)+label,
+        .form .group input:focus+label {
             top: -10px;
             left: 10px;
             background-color: #fff;
@@ -211,12 +192,10 @@
             font-size: 14px;
         }
 
-        .form .group textarea {
-            resize: none;
-            height: 100px;
-            margin-bottom: 10px;
+        .form .group input:focus {
+            border-color: #3366cc;
         }
-
+        
         button {
             display: inline-block;
             border-radius: 8px;
@@ -301,7 +280,6 @@
 
         .radio-tile {
             display: flex;
-            /* flex-direction: column; */
             align-items: center;
             justify-content: center;
             width: 98px;
@@ -309,7 +287,6 @@
             border-radius: 0.8rem;
             border: 2px solid #b5bfd9;
             background-color: #fff;
-            /* box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); */
             transition: 0.15s ease;
             cursor: pointer;
             position: relative;

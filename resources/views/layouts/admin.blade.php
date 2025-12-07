@@ -16,8 +16,6 @@
 <body class="bg-gray-50 text-gray-800">
 
     <div class="flex h-screen overflow-hidden">
-        
-        {{-- SIDEBAR --}}
         <aside class="w-64 bg-slate-900 text-white flex-col hidden md:flex transition-all duration-300">
             <div class="h-16 flex items-center justify-center border-b border-slate-700">
                 <h1 class="text-xl font-bold">Peduli<span class="text-blue-500">Asa</span></h1>
@@ -58,10 +56,7 @@
             </nav>
         </aside>
 
-        {{-- MAIN CONTENT WRAPPER --}}
         <div class="flex-1 flex flex-col overflow-hidden">
-            
-            {{-- HEADER / NAVBAR --}}
             <header class="h-16 bg-white shadow-sm flex items-center justify-between px-6 z-20 relative">
                 <h2 class="text-lg font-semibold text-gray-700">@yield('header_title', 'Overview')</h2>
                 
@@ -97,29 +92,23 @@
                 </div>
                 </header>
 
-            {{-- CONTENT BODY --}}
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-6">
                 @yield('content')
             </main>
         </div>
     </div>
 
-    {{-- SCRIPTS --}}
     <script>
-        // Inisialisasi Feather Icons
         feather.replace();
 
-        // LOGIC DROPDOWN
         const profileBtn = document.getElementById('profileButton');
         const dropdownMenu = document.getElementById('profileDropdown');
 
-        // Toggle saat tombol diklik
         profileBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Mencegah event bubbling ke window
+            e.stopPropagation();
             dropdownMenu.classList.toggle('hidden');
         });
 
-        // Tutup dropdown jika klik di luar area
         window.addEventListener('click', (e) => {
             if (!profileBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
                 dropdownMenu.classList.add('hidden');

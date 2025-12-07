@@ -10,7 +10,6 @@ use App\Models\Program;
 class TransactionController extends Controller
 {
     public function index() {
-        // $transactions = Transaction::paginate(10);
         $transactions = Transaction::with([
                 'user:id,username',
                 'program:id,program_name'

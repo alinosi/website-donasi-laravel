@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Donatur;
 use App\Models\Program;
 use App\Models\Transaction;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -16,14 +18,12 @@ class DonaturController extends Controller
 {
     public function index(): View
     {
-        // $donaturs = Donatur::latest()->paginate(10);
         $donaturs = Donatur::latest()->get();
         return view('donaturs.index', compact('donaturs'));
     }
 
     public function tampilDonatur(): View
     {
-        // $donaturs = Donatur::latest()->paginate(10);
             $donaturs = Transaction::with([
                 'user:id,username',
                 'program:id,program_name'
@@ -33,22 +33,16 @@ class DonaturController extends Controller
         return view('donaturs.donaturPublic', compact('donaturs'));
     }
 
-    // ==== AWAL TAMBAH DATA ====
     public function create($id): View
     {
+        $user = User::findOrFail(Auth::id());
         $program = Program::findOrFail($id);
 
-        return view('donaturs.create', compact('program'));
+        return view('donaturs.create', compact('program', 'user'));
     }
-    // ---- AKHIR TAMBAH DATA ----
 
     public function donasi(): View
     {
-        // $donaturs = Donatur::latest()->get();
-
-        // $totalTerkumpul = $donaturs->sum('total_donasi');
-        // $totalOrang = $donaturs->count();
-
         $donationsdata = Program::where('is_active', 1)->get();
         $donationsRecapt = Transaction::select('program_id', DB::raw('count(*) as total_user'))
                  ->groupBy('program_id')
@@ -57,9 +51,6 @@ class DonaturController extends Controller
         return view('donasi', compact('donationsdata', 'donationsRecapt'));
     }
 
-    // ---- AKHIR SIMPAN DATA ----
-
-    // UPDATE : DETAIL DATA
     public function show(string $id): View
     {
         $donatur = Donatur::findOrFail($id);
@@ -67,7 +58,6 @@ class DonaturController extends Controller
         return view('donaturs.show', compact('donatur'));
     }
 
-    // ==== AWAL EDIT DATA ====
     public function edit(string $id): View
     {
         $donatur = Donatur::findOrFail($id);
@@ -80,11 +70,10 @@ class DonaturController extends Controller
         $request->validate([
             'nama'         => 'required|string|min:1',
             'pesan'        => 'required|string|min:1',
-            'total_donasi' => 'required|string|min:1', // Ubah sementara
+            'total_donasi' => 'required|string|min:1', 
             'tipe_bayar'   => 'required|string|min:1',
         ]);
 
-        // Buang titik
         $total_donasi = str_replace(['Rp. ', '.', ','], '', $request->total_donasi);
 
         if (!is_numeric($total_donasi) || $total_donasi < 1) {
@@ -102,9 +91,7 @@ class DonaturController extends Controller
 
         return redirect()->route('donaturs.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
-    // ---- AKHIR EDIT DATA ----
-
-    // ==== AWAL HAPUS DATA ====
+    
     public function destroy($id): RedirectResponse
     {
         $donatur = Donatur::findOrFail($id);
@@ -113,5 +100,4 @@ class DonaturController extends Controller
 
         return redirect()->route('donaturs.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
-    // ---- AKHIR HAPUS DATA ----
 }

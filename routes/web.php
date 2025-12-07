@@ -22,27 +22,20 @@ Route::middleware([cekLogin::class])->group(function () {
     Route::post('/pembayaran/store', [TransactionController::class, 'store'])->name('transaction.store');
 });
 
-
 Route::middleware([cekAdmin::class])->group(function () {
-    Route::get('/dashboard', [DonaturController::class, 'index']);
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-    
-    // URL: /admin/users -> Route Name: admin.users.index
-    Route::resource('users', UserController::class)->name('index', 'admin.users.index');
 
-    // URL: /admin/programs
-    // Route::get('/programs', ProgramController::class)->name('index', 'admin.programs.index');
     Route::get('/programs', [ProgramController::class, 'index'])->name('admin.programs.index');
+    
     Route::get('/programs/create', [ProgramController::class, 'create'])->name('admin.programs.create');
     Route::post('/programs/create', [ProgramController::class, 'store'])->name('admin.programs.store');
+    
     Route::patch('/programs/{id}', [ProgramController::class, 'deactivate'])->name('admin.programs.deactivate');
-
-
-    // URL: /admin/transactions
+    
+    Route::resource('users', UserController::class)->name('index', 'admin.users.index');
     Route::resource('transactions', TransactionController::class)->name('index', 'admin.transactions.index');
 });
 
-// SESI LOGIN
 Route::get('/session', [SessionController::class, 'index']);
 Route::post('/session/login', [SessionController::class, 'login']);
 

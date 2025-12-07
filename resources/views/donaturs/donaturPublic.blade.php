@@ -1,6 +1,5 @@
 @extends('layouts.header')
 @section('title', 'Daftar Donatur')
-{{-- LIST DONATUR PUBLIK --}}
 
 @section('content')
     <div class="container mt-5">

@@ -1,6 +1,5 @@
 @extends('layouts.header')
 @section('title', 'Daftar Donatur')
-{{-- DASHBOARD ADMIN --}}
 
 @section('content')
     <div class="container mt-5">
