@@ -1,6 +1,5 @@
 @extends('layouts.header')
 @section('title', 'Edit Data')
-{{-- EDIT DONASI --}}
 
 @section('content')
     <div class="d-flex justify-content-center">
